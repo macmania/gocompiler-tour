@@ -1,1 +1,1 @@
-A compiler I'm writing from scratch using Go to power up the front and back-end portions. 
+A compiler I'm writing from scratch using Go to power up the front and back-end portions. I'm following the coursera course https://class.coursera.org/compilers-selfservice to better understand how compilers work. 
