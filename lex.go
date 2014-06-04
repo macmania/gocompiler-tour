@@ -8,7 +8,7 @@ import (
 )
 
 
-//goes to the entire file and parser each of the tokens 
+//goes to the entire file and parser each of the tokens
 func parser(){
 
 }
