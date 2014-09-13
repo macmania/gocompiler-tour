@@ -6,12 +6,17 @@ package main //figure out how to run a go file using another package name
 import (
 	"fmt"
 	//"go/token"
-	"image/jpeg"
-	"image/gif"
-	"image/png"
-	"io/ioutil"
-	"log"
+	"image"
+	//"image/jpeg"
+	_ "image/gif"
+	//"image/png"
+	//"io/ioutil"
+	//"log"
+	_ "strconv"
 	"os"
+	_"encoding/hex"
+	_"reflect"
+	"strings"
 )
 
 //lists all of the colors that will be represented in this language
@@ -61,32 +66,43 @@ var tableHexLight = map[string]int{
 //hues and light and outputs the changes to a new text
 //is void for now since we're just classifying the pixels
 func parser(fileName string) {
-	infile, err := os.Open(string)
+	infile, err := os.Open(fileName)
 	if err != nil {
-		panic(err.String())
+		fmt.Println(err)
 	}
 	defer infile.Close() //puts this function call to a list, it ensures that this call is called
 
 
 	src, _, err := image.Decode(infile)
 	if err != nil {
-		panic(err.String())
+		fmt.Println(err)
 	}
 
 	bounds := src.Bounds() 
 	w, h := bounds.Max.X, bounds.Max.Y
-	for x := 0; x < w; x++ {
-		for y := 0; y < h; y++ {
-			color := src.At(x, y)
-			fmt.Println(color)
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			r, b, g, _ := src.At(x, y).RGBA()
+			colorInt := []byte{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8)}
+			hexStr := strings.Replace(fmt.Sprintf("% x", colorInt), " ", "", -1)
+			hexStr = strings.ToUpper(hexStr)
+			fmt.Print(tableHexColors[hexStr], " ")
 		}
+		fmt.Print("\n")
 	}
 }
 //
 func main() {
+	
+	//temporary fix for the /png library
+	i := 12
+	_ = i
+	//temporary fix
+
 	if len(os.Args) < 2 {
 		fmt.Println("Please enter the file name") //to-do, print based on the error specified on the top of the file
 	} else {
+		fmt.Println(os.Args[1])
 		parser(os.Args[1])
 	}
 }
