@@ -7,9 +7,9 @@ import (
 	"fmt"
 	//"go/token"
 	"image"
-	//"image/jpeg"
+	_"image/jpeg"
 	_ "image/gif"
-	//"image/png"
+	_"image/png"
 	//"io/ioutil"
 	//"log"
 	_ "strconv"
@@ -64,14 +64,12 @@ var tableHexLight = map[string]int{
 
 //goes to the entire file and parser each of the pixels and classifies the change of colors,
 //hues and light and outputs the changes to a new text
-//is void for now since we're just classifying the pixels
 func parser(fileName string) {
 	infile, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer infile.Close() //puts this function call to a list, it ensures that this call is called
-
 
 	src, _, err := image.Decode(infile)
 	if err != nil {
@@ -91,14 +89,10 @@ func parser(fileName string) {
 		fmt.Print("\n")
 	}
 }
-//
-func main() {
-	
-	//temporary fix for the /png library
-	i := 12
-	_ = i
-	//temporary fix
 
+
+
+func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Please enter the file name") //to-do, print based on the error specified on the top of the file
 	} else {
