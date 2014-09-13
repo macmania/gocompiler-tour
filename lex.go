@@ -6,7 +6,9 @@ package main //figure out how to run a go file using another package name
 import (
 	"fmt"
 	//"go/token"
-	"image"
+	"image/jpeg"
+	"image/gif"
+	"image/png"
 	"io/ioutil"
 	"log"
 	"os"
@@ -59,7 +61,26 @@ var tableHexLight = map[string]int{
 //hues and light and outputs the changes to a new text
 //is void for now since we're just classifying the pixels
 func parser(fileName string) {
-	fmt.Println("Hello")
+	infile, err := os.Open(string)
+	if err != nil {
+		panic(err.String())
+	}
+	defer infile.Close() //puts this function call to a list, it ensures that this call is called
+
+
+	src, _, err := image.Decode(infile)
+	if err != nil {
+		panic(err.String())
+	}
+
+	bounds := src.Bounds() 
+	w, h := bounds.Max.X, bounds.Max.Y
+	for x := 0; x < w; x++ {
+		for y := 0; y < h; y++ {
+			color := src.At(x, y)
+			fmt.Println(color)
+		}
+	}
 }
 
 func main() {
