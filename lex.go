@@ -82,7 +82,7 @@ func parser(fileName string) {
 		}
 	}
 }
-
+//
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Please enter the file name") //to-do, print based on the error specified on the top of the file
