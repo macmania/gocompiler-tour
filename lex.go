@@ -7,17 +7,28 @@ import (
 	"fmt"
 	//"go/token"
 	"image"
-	_"image/jpeg"
 	_ "image/gif"
-	_"image/png"
+	_ "image/jpeg"
+	_ "image/png"
 	//"io/ioutil"
 	//"log"
-	_ "strconv"
+	_ "encoding/hex"
 	"os"
-	_"encoding/hex"
-	_"reflect"
+	_ "reflect"
+	_ "strconv"
 	"strings"
 )
+
+type Traversal struct {
+	name  string
+	begin int
+	end   int
+}
+
+//still don't know how to restruct this yet
+func typeOfTraversal(traversal Traversal) {
+
+}
 
 //lists all of the colors that will be represented in this language
 //props to gitpan/Piet-Interpreter, just following his
@@ -76,7 +87,7 @@ func parser(fileName string) {
 		fmt.Println(err)
 	}
 
-	bounds := src.Bounds() 
+	bounds := src.Bounds()
 	w, h := bounds.Max.X, bounds.Max.Y
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
@@ -89,8 +100,6 @@ func parser(fileName string) {
 		fmt.Print("\n")
 	}
 }
-
-
 
 func main() {
 	if len(os.Args) < 2 {
