@@ -19,6 +19,15 @@ import (
 	"strings"
 )
 
+
+//enums in golang, represents the dp's direction
+const (
+	DPRight = iota // -> 
+	DPDown = iota 
+	DPLeft = iota //<-
+	DPUp = iota
+)
+
 type Traversal struct {
 	name  string
 	begin int
@@ -27,7 +36,9 @@ type Traversal struct {
 
 //still don't know how to restruct this yet
 func typeOfTraversal(traversal Traversal) {
+	if traversal.name == "forward" {
 
+	}
 }
 
 //lists all of the colors that will be represented in this language
@@ -73,6 +84,15 @@ var tableHexLight = map[string]int{
 	"FFFFFF": -1, "000000": -1,
 }
 
+
+var colorCommands = [ "push", 		"pop", 		"noop"
+					  "add", 		"subtract", "multiply", 
+					  "divide",		"mod", 		"not", 		
+					  "greater", 	"pointer",  "switch", 	
+					  "duplicate", 	"roll", 	"in_char", 	
+					  "out_char", 	"in_num", 	"out_num"
+					]
+
 //goes to the entire file and parser each of the pixels and classifies the change of colors,
 //hues and light and outputs the changes to a new text
 func parser(fileName string) {
@@ -87,6 +107,7 @@ func parser(fileName string) {
 		fmt.Println(err)
 	}
 
+	//Need to be redone
 	bounds := src.Bounds()
 	w, h := bounds.Max.X, bounds.Max.Y
 	for y := 0; y < h; y++ {
