@@ -1,15 +1,14 @@
 package main
 
 import (
-        "fmt"
-        //"log"
-        "lexer"
-        //"io"
-        "os"
+	"fmt"
+	//"log"
+	//"io"
+	"os"
 )
 
-func main(){
- 
-        println("Something ", os.Args[1])
+func main() {
+
+	println("Something ", os.Args[1])
 
 }

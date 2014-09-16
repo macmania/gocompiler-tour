@@ -5,6 +5,7 @@
 package main //figure out how to run a go file using another package name
 import (
 	"fmt"
+	"go/build"
 	//"go/token"
 	"image"
 	_ "image/gif"
@@ -28,18 +29,10 @@ const (
 	DPUp = iota
 )
 
-type Traversal struct {
-	name  string
-	begin int
-	end   int
-}
-
-//still don't know how to restruct this yet
-func typeOfTraversal(traversal Traversal) {
-	if traversal.name == "forward" {
-
-	}
-}
+const (
+	CCLeft = iota
+	CCRight = iota
+)
 
 //lists all of the colors that will be represented in this language
 //props to gitpan/Piet-Interpreter, just following his
@@ -92,6 +85,36 @@ var colorCommands = [ "push", 		"pop", 		"noop"
 					  "duplicate", 	"roll", 	"in_char", 	
 					  "out_char", 	"in_num", 	"out_num"
 					]
+
+
+type StackOps interface {
+	push() 
+	pop() string
+	peek() string
+}
+//make an interface for this 
+type Stack struct { 
+	command Command
+	next Stack
+}
+
+//contains all of the fields needed to run the interpreter
+type PietInterpreter struct {
+	DP int
+	CC int
+	stackProg Stack //maintains the stack operation details
+}
+
+func push(stack Stack, command string){
+	tempComm := stack
+	stack.command = command 
+	stack.next = tempComm
+}
+
+func peek(stack Stack) string {
+	return stack.next
+}
+
 
 //goes to the entire file and parser each of the pixels and classifies the change of colors,
 //hues and light and outputs the changes to a new text
