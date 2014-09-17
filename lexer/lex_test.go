@@ -4,33 +4,27 @@
 package lexer
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestPush(t *testing.T) {
-	stack := Stack{"hello", nil}
-	push(stack, "hi")
+	stack := Stack{"hello", &Stack{}}
+	stack = push(stack, "hi")
 	if peek(stack) != "hi" {
 		t.Error("Expected 'hi', got ", peek(stack))
 	}
 }
 
 func TestPop(t *testing.T) {
-	stack := Stack{"hello", nil}
-
-	if pop(stack) == true {
+	stack := Stack{"hello", &Stack{}}
+	stack = pop(stack)
+	if peek(stack) != "" {
 		t.Error("Expected true", peek(stack))
 	}
-	if pop(stack) {
-		t.Error(peek(stack))
-	}
-	//if (isSuccess)
-	push(stack, "hi")
-	push(stack, "hoola")
-	pop(stack)
+	stack = push(stack, "hi")
+	stack = push(stack, "hoola")
+	stack = pop(stack)
 	if peek(stack) != "hi" {
 		t.Error("Expected hi", peek(stack))
 	}
-	fmt.Println("Hello")
 }

@@ -104,25 +104,24 @@ type PietInterpreter struct {
 	stackProg Stack //maintains the stack operation details
 }
 
-func push(stack Stack, command string) {
+func push(stack Stack, command string) Stack {
 	tempComm := stack
 	stack.command = command
-	*stack.next = tempComm
+	stack.next = &tempComm
+
+	return stack
 }
 
 func peek(stack Stack) string {
-	return stack.next.command
+	return stack.command
 }
 
-func pop(stack Stack) bool {
+func pop(stack Stack) Stack {
 	if &stack != nil {
 		stack = *stack.next
-		return true
-	} else {
-		//need to change the way that error messaging is handled
-		//panic(fmt.Println("Stack is empty"))
-		return false
+		return stack
 	}
+	return Stack{}
 
 }
 
