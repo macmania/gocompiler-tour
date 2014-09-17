@@ -12,3 +12,7 @@ func testPush(t *testing.T) {
 		t.Error("Expected 'hi', got ", peek(stack))
 	}
 }
+
+func testPop(t *testing.T) {
+
+}

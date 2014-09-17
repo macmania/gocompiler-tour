@@ -3,9 +3,10 @@
 
 //A lex parser in Go for the language Cool
 package main //figure out how to run a go file using another package name
+
 import (
 	"fmt"
-	"go/build"
+	_ "go/build"
 	//"go/token"
 	"image"
 	_ "image/gif"
@@ -20,17 +21,16 @@ import (
 	"strings"
 )
 
-
 //enums in golang, represents the dp's direction
 const (
-	DPRight = iota // -> 
-	DPDown = iota 
-	DPLeft = iota //<-
-	DPUp = iota
+	DPRight = iota // ->
+	DPDown  = iota
+	DPLeft  = iota //<-
+	DPUp    = iota
 )
 
 const (
-	CCLeft = iota
+	CCLeft  = iota
 	CCRight = iota
 )
 
@@ -77,44 +77,49 @@ var tableHexLight = map[string]int{
 	"FFFFFF": -1, "000000": -1,
 }
 
-
-var colorCommands = [ "push", 		"pop", 		"noop"
-					  "add", 		"subtract", "multiply", 
-					  "divide",		"mod", 		"not", 		
-					  "greater", 	"pointer",  "switch", 	
-					  "duplicate", 	"roll", 	"in_char", 	
-					  "out_char", 	"in_num", 	"out_num"
-					]
-
+var colorCommands = [...]string{"push", "pop", "noop",
+	"add", "subtract", "multiply",
+	"divide", "mod", "not",
+	"greater", "pointer", "switch",
+	"duplicate", "roll", "in_char",
+	"out_char", "in_num", "out_num",
+}
 
 type StackOps interface {
-	push() 
+	push()
 	pop() string
 	peek() string
 }
-//make an interface for this 
-type Stack struct { 
-	command Command
-	next Stack
+
+//make an interface for this
+type Stack struct {
+	command string
+	next    *Stack
 }
 
 //contains all of the fields needed to run the interpreter
 type PietInterpreter struct {
-	DP int
-	CC int
+	DP        int
+	CC        int
 	stackProg Stack //maintains the stack operation details
 }
 
-func push(stack Stack, command string){
+func push(stack Stack, command string) {
 	tempComm := stack
-	stack.command = command 
-	stack.next = tempComm
+	stack.command = command
+	*stack.next = tempComm
 }
 
 func peek(stack Stack) string {
-	return stack.next
+	return stack.next.command
 }
 
+func pop(stack Stack) {
+	if &stack != nil {
+		stack = *stack.next
+	}
+
+}
 
 //goes to the entire file and parser each of the pixels and classifies the change of colors,
 //hues and light and outputs the changes to a new text
