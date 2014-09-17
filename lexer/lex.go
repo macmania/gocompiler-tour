@@ -2,7 +2,7 @@
 //rules specified on this site: http://www.dangermouse.net/esoteric/piet.html
 
 //A lex parser in Go for the language Cool
-package main //figure out how to run a go file using another package name
+package lexer //figure out how to run a go file using another package name
 
 import (
 	"fmt"
@@ -114,9 +114,14 @@ func peek(stack Stack) string {
 	return stack.next.command
 }
 
-func pop(stack Stack) {
+func pop(stack Stack) bool {
 	if &stack != nil {
 		stack = *stack.next
+		return true
+	} else {
+		//need to change the way that error messaging is handled
+		//panic(fmt.Println("Stack is empty"))
+		return false
 	}
 
 }
