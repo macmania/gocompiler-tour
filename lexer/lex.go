@@ -104,24 +104,27 @@ type PietInterpreter struct {
 	stackProg Stack //maintains the stack operation details
 }
 
-func push(stack Stack, command string) Stack {
-	tempComm := stack
+func push(stack *Stack, command string) {
+	tempComm := *stack
 	stack.command = command
 	stack.next = &tempComm
-
-	return stack
 }
 
-func peek(stack Stack) string {
+func peek(stack *Stack) string {
 	return stack.command
 }
 
-func pop(stack Stack) Stack {
-	if &stack != nil {
-		stack = *stack.next
-		return stack
+func pop(stack *Stack) {
+	if stack != nil {
+		fmt.Println(" here", stack)
+		stack.command = stack.next.command
+		fmt.Println(stack.command)
+		for ; stack != nil; stack = stack.next {
+			fmt.Print(stack.command)
+		}
+		stack = stack.next
+		fmt.Println(stack.command, stack.next)
 	}
-	return Stack{}
 
 }
 
