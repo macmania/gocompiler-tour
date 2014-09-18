@@ -23,11 +23,9 @@ func TestPop(t *testing.T) {
 		t.Error("Expected true", peek(&stack))
 	}
 	push(&stack, "hi")
-	fmt.Println(stack.command)
 	push(&stack, "hoola")
-	fmt.Println(stack.command)
 	pop(&stack)
-	fmt.Println(stack.command)
+
 	if peek(&stack) != "hi" {
 		t.Error("Expected hi", peek(&stack))
 	}

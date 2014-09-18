@@ -116,14 +116,10 @@ func peek(stack *Stack) string {
 
 func pop(stack *Stack) {
 	if stack != nil {
-		fmt.Println(" here", stack)
-		stack.command = stack.next.command
-		fmt.Println(stack.command)
-		for ; stack != nil; stack = stack.next {
-			fmt.Print(stack.command)
+		if stack.next != nil {
+			stack.command = stack.next.command
 		}
 		stack = stack.next
-		fmt.Println(stack.command, stack.next)
 	}
 
 }
