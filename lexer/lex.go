@@ -121,7 +121,6 @@ func pop(stack *Stack) {
 		}
 		stack = stack.next
 	}
-
 }
 
 //goes to the entire file and parser each of the pixels and classifies the change of colors,
@@ -140,18 +139,66 @@ func parser(fileName string) {
 
 	//Need to be redone
 	bounds := src.Bounds()
-	w, h := bounds.Max.X, bounds.Max.Y
-	for y := 0; y < h; y++ {
-		for x := 0; x < w; x++ {
-			r, b, g, _ := src.At(x, y).RGBA()
-			colorInt := []byte{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8)}
-			hexStr := strings.Replace(fmt.Sprintf("% x", colorInt), " ", "", -1)
-			hexStr = strings.ToUpper(hexStr)
-			fmt.Print(tableHexColors[hexStr], " ")
+	isIterateI, isIterateJ = false, true
+	prevColor, currColor, nextColor := " ", " ", " "
+	X, Y = bounds.Max.X, bounds.Max.Y
+	currCommand = " "
+	for(i, j := 0, 0 ; i > -1 && j > -1 && i < Y && j < X; ){
+		r, b, g, _ := src.At(x, y).RGBA()
+		colorInt := []byte{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8)}
+		hexStr := strings.Replace(fmt.Sprintf("% x", colorInt), " ", "", -1)
+		hexStr = strings.ToUpper(hexStr)
+		nextColor = tableHexColors[hexStr]
+
+		if (prevColor == " "){
+			prevColor = currColor 
+		} else if nextColor == "black" || nextColor == "white" { //iterate up and down until 
+				if (isIterateI){
+					isIterateI = false
+					isIterateJ = true
+				}else {
+					isIterateI = true
+					isIterateJ = false
+				}
+
+
+			/***for(iTemp, jTemp := i, j; (currColor != "black" || currColor != "white") 
+					&& i > -1 && j > -1 && i < Y && j < X;){
+
+
+			} **/
 		}
-		fmt.Print("\n")
+
+		else if prevCommand == currCommand{
+			isIterateI = true
+			isIterateJ = false
+		}
+
+		if (isIterateJ) {
+			incrementRight(&i, &j)
+		}
+		currColor = tableHexColors[hexStr] //need this to be placed somewhere else 
+
+
 	}
 }
+
+func toRight(i *int, j *int) (*int, *int){
+	return i, *j++
+}
+func toLeft(i *int, j *int) (*int, *int){
+	return i,*j--
+}
+
+func toUp(i *int, j *int)(*int, *int){
+	return *i++, j
+}
+
+func toDown(i *int, j *int)(*int, *int){
+	return *i--, j	
+}
+
+
 
 func main() {
 	if len(os.Args) < 2 {
